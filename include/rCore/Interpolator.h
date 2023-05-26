@@ -11,10 +11,7 @@
 #define __INTERPOLATOR_H__
 
 #include "link_pragmas.h"
-#define EIGEN_MATRIXBASE_PLUGIN "rCore/EigenMatrixBasePlugin.h"
-#define EIGEN_MATRIX_PLUGIN "rCore/EigenMatrixPlugin.h"
-// #define	EIGEN_TRANSFORM_PLUGIN "rCore/EigenTransformPlugin.h"
-#include <Eigen/Eigen>
+#include "rMath/rMath.h"
 
 namespace rCore {
 class RCORE_IMPEXP Interpolator {
@@ -46,38 +43,27 @@ public:
   // 	};
 
 public:
-  typedef Eigen::Matrix<double, -1, 1> VectorXd;
-  typedef Eigen::Matrix<double, 2, 1> Vector2d;
-  typedef Eigen::Matrix<double, 3, 1> Vector3d;
-  typedef Eigen::Matrix<double, 4, 1> Vector4d;
-  typedef Eigen::Matrix<double, 6, 1> Vector6d;
-  typedef Eigen::Matrix<double, -1, -1> MatrixXd;
-  typedef Eigen::Matrix<double, 2, 2> Matrix2d;
-  typedef Eigen::Matrix<double, 3, 3> Matrix3d;
-  typedef Eigen::Matrix<double, 4, 4> Matrix4d;
-  typedef Eigen::Matrix<double, 6, 6> Matrix6d;
-
   Interpolator() : _type(Interpolator::TYPE::NONE), _t0(0), _tf(0), _coeff() {}
   virtual ~Interpolator() {}
 
   Interpolator(const Interpolator::TYPE type, const double t0, const double tf,
-               const Eigen::VectorXd &initial, const Eigen::VectorXd &final);
+               const rMath::VectorXd &initial, const rMath::VectorXd &final);
 
   void reconfigure(const Interpolator::TYPE type, const double t0,
-                   const double tf, const VectorXd &initial,
-                   const VectorXd &final);
+                   const double tf, const rMath::VectorXd &initial,
+                   const rMath::VectorXd &final);
 
   void interpolate(const double t, double &p, double &v, double &a) const;
 
 private:
-  void _determineCoeff(const VectorXd &initial,
-                       const VectorXd &final /*, void* data = NULL*/);
+  void _determineCoeff(const rMath::VectorXd &initial,
+                       const rMath::VectorXd &final /*, void* data = NULL*/);
 
 private:
   Interpolator::TYPE _type;
   double _t0;
   double _tf;
-  VectorXd _coeff;
+  rMath::VectorXd _coeff;
 };
 } // namespace rCore
 

@@ -8,15 +8,15 @@
 namespace rCore {
 
 Interpolator::Interpolator(const Interpolator::TYPE type, const double t0,
-                           const double tf, const VectorXd &initial,
-                           const VectorXd &final)
+                           const double tf, const rMath::VectorXd &initial,
+                           const rMath::VectorXd &final)
     : _type(type), _t0(t0), _tf(tf), _coeff() {
   _determineCoeff(initial, final);
 }
 
-void Interpolator::reconfigure(const Interpolator::TYPE type,
-                               const double t0, const double tf,
-                               const VectorXd &initial, const VectorXd &final) {
+void Interpolator::reconfigure(const Interpolator::TYPE type, const double t0,
+                               const double tf, const rMath::VectorXd &initial,
+                               const rMath::VectorXd &final) {
   _type = type;
   _t0 = t0;
   _tf = tf;
@@ -103,8 +103,9 @@ void Interpolator::interpolate(const double _t, double &p, double &v,
   }
 }
 
-void Interpolator::_determineCoeff(const VectorXd &initial,
-                                   const VectorXd &final /*, void* data*/) {
+void Interpolator::_determineCoeff(
+    const rMath::VectorXd &initial,
+    const rMath::VectorXd &final /*, void* data*/) {
   // CoolCat@20121024: Modified
   // 	double t0sqr = _t0*_t0;
   // 	double t0cub = _t0*t0sqr;
@@ -126,7 +127,7 @@ void Interpolator::_determineCoeff(const VectorXd &initial,
     break;
 
   case Interpolator::TYPE::LINEAR: {
-    Matrix2d B;
+    rMath::Matrix2d B;
     // 			B(0, 0) = 1.0; B(0, 1) = _t0;
     // 			B(1, 0) = 1.0; B(1, 1) = _tf;
     B(0, 0) = 1;
@@ -142,7 +143,7 @@ void Interpolator::_determineCoeff(const VectorXd &initial,
   } break;
 
   case Interpolator::TYPE::QUADRATIC: {
-    Matrix3d B;
+    rMath::Matrix3d B;
     // 			B(0, 0) = 1.0; B(0, 1) = _t0;  B(0, 2) = t0sqr;
     // 			B(1, 0) = 0.0; B(1, 1) = 1.0; B(1, 2) = 2*_t0;
     // 			B(2, 0) = 1.0; B(2, 1) = _tf;  B(2, 2) = tfsqr;
@@ -165,7 +166,7 @@ void Interpolator::_determineCoeff(const VectorXd &initial,
   } break;
 
   case Interpolator::TYPE::CUBIC: {
-    Matrix4d B;
+    rMath::Matrix4d B;
     // 			B(0, 0) = 1.0; B(0, 1) = _t0;  B(0, 2) = t0sqr; B(0, 3) =
     // t0cub; 			B(1, 0) = 0.0; B(1, 1) = 1.0; B(1, 2) = 2*_t0;  B(1, 3) = 3*t0sqr;
     // 			B(2, 0) = 1.0; B(2, 1) = _tf;  B(2, 2) = tfsqr; B(2, 3) =
@@ -195,7 +196,7 @@ void Interpolator::_determineCoeff(const VectorXd &initial,
   } break;
 
   case Interpolator::TYPE::QUINTIC: {
-    Matrix6d B;
+    rMath::Matrix6d B;
     // 			B(0, 0) = 1.0; B(0, 1) = _t0;  B(0, 2) = t0sqr; B(0, 3) = t0cub;
     // B(0, 4) = t0quad;   B(0, 5) = t0quint; 			B(1, 0) = 0.0; B(1, 1) = 1.0; B(1,
     // 2) = 2*_t0;  B(1, 3) = 3*t0sqr; B(1, 4) = 4*t0cub;  B(1, 5) = 5*t0quad;
@@ -251,7 +252,7 @@ void Interpolator::_determineCoeff(const VectorXd &initial,
   } break;
 
   case Interpolator::TYPE::JERK: {
-    Matrix6d B;
+    rMath::Matrix6d B;
     // 			B(0, 0) = 1.0; B(0, 1) = _t0;  B(0, 2) = t0sqr; B(0, 3) = t0cub;
     // B(0, 4) = t0quad;   B(0, 5) = t0quint; 			B(1, 0) = 0.0; B(1, 1) = 1.0; B(1,
     // 2) = 2*_t0;  B(1, 3) = 3*t0sqr; B(1, 4) = 4*t0cub;  B(1, 5) = 5*t0quad;
