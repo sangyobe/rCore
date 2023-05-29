@@ -10,9 +10,9 @@
 #ifndef __RMATH_RMATH_H__
 #define __RMATH_RMATH_H__
 
-#define EIGEN_MATRIXBASE_PLUGIN "rMath/EigenMatrixBasePlugin.h"
-#define EIGEN_MATRIX_PLUGIN "rMath/EigenMatrixPlugin.h"
-#define EIGEN_TRANSFORM_PLUGIN "rMath/EigenTransformPlugin.h"
+// #define EIGEN_MATRIXBASE_PLUGIN "rMath/EigenMatrixBasePlugin.h"
+// #define EIGEN_MATRIX_PLUGIN "rMath/EigenMatrixPlugin.h"
+// #define EIGEN_TRANSFORM_PLUGIN "rMath/EigenTransformPlugin.h"
 #include <Eigen/Eigen>
 
 namespace rMath {
