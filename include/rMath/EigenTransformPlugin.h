@@ -1,8 +1,17 @@
-template<typename Scalar>
-inline void setRotation(const Scalar* values) { for (Index i = 0; i < 3; i++) for (Index j = 0; j < 3; j++) operator()(i, j) = values[i * 3 + j]; matrix().row(3) = Vector4D::UnitW(); }
+template <typename Scalar> inline void setRotation(const Scalar *values) {
+  for (Index i = 0; i < 3; i++)
+    for (Index j = 0; j < 3; j++)
+      operator()(i, j) = values[i * 3 + j];
+  matrix().row(3) = Vector4d::UnitW();
+}
 
 //template<typename Scalar>
-inline void setTranslation(const Scalar& x, const Scalar& y, const Scalar& z) { operator()(0, 3) = x; operator()(1, 3) = y; operator()(2, 3) = z; matrix().row(3) = Vector4D::UnitW(); }
+inline void setTranslation(const Scalar &x, const Scalar &y, const Scalar &z) {
+  this->operator()(0, 3) = x;
+  this->operator()(1, 3) = y;
+  this->operator()(2, 3) = z;
+  matrix().row(3) = Vector4d : UnitW();
+}
 
 // C = At * M * A
 // =[Rt, 0; -Rt*rX, Rt][M00, M01; M10, M11][R, rX*R; 0 R]
@@ -100,20 +109,20 @@ inline void GetExpCoord(Eigen::MatrixBase<OtherDrived>& xi) const
 	//Scalar theta = aa.angle(); 
 	//xi.tail<3>() = aa.axis() * theta;
 
-	//if (fabs(theta) < RMATH_ZERO)
-	//	xi.head<3>() = translation();
-	//else
-	//{
-	//	Matrix3D dexpinv;
-	//	dExpInv_SO3(xi.tail<3>(), dexpinv);
-	//	xi.head<3>() = dexpinv * translation();
-	//}
+        // if (fabs(theta) < RMATH_ZERO)
+        //	xi.head<3>() = translation();
+        // else
+        //{
+        //	Matrix3d dexpinv;
+        //	dExpInv_SO3(xi.tail<3>(), dexpinv);
+        //	xi.head<3>() = dexpinv * translation();
+        // }
 
-	linear().GetExpCoord(xi.tail<3>());
+        linear().GetExpCoord(xi.tail<3>());
 
-	Matrix3D dexpinv;
-	Vector3D(xi.tail<3>()).dExpInv_SO3(dexpinv);
-	xi.head<3>() = dexpinv * translation();
+        Matrix3d dexpinv;
+        Vector3d(xi.tail<3>()).dExpInv_SO3(dexpinv);
+        xi.head<3>() = dexpinv * translation();
 }
 
 /**

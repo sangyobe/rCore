@@ -10,7 +10,9 @@
 #ifndef __RMATH_RMATH_H__
 #define __RMATH_RMATH_H__
 
-// #define EIGEN_MATRIXBASE_PLUGIN "rMath/EigenMatrixBasePlugin.h"
+#include <vector>
+// using namespace std;
+#define EIGEN_MATRIXBASE_PLUGIN "rMath/EigenMatrixBasePlugin.h"
 // #define EIGEN_MATRIX_PLUGIN "rMath/EigenMatrixPlugin.h"
 // #define EIGEN_TRANSFORM_PLUGIN "rMath/EigenTransformPlugin.h"
 #include <Eigen/Eigen>
@@ -26,6 +28,10 @@ typedef Eigen::Matrix<double, 2, 2> Matrix2d;
 typedef Eigen::Matrix<double, 3, 3> Matrix3d;
 typedef Eigen::Matrix<double, 4, 4> Matrix4d;
 typedef Eigen::Matrix<double, 6, 6> Matrix6d;
+
+typedef VectorXd dVector;
+typedef MatrixXd dMatrix;
+
 } // namespace rMath
 
 #endif // __RMATH_RMATH_H__

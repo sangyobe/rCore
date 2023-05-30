@@ -8,7 +8,7 @@ find_package(Eigen3 3.4.0 REQUIRED)
 if(NOT Eigen3_FOUND)
     MESSAGE(FATAL_ERROR "Eigen3 not found.")
 endif()
-MESSAGE(STATUS "Eigen3 was found at ${EIGEN3_INCLUDE_DIR}.")
+MESSAGE(STATUS "Eigen3 was found at ${EIGEN3_INCLUDE_DIR}")
 INCLUDE_DIRECTORIES(${EIGEN3_INCLUDE_DIR})
 
 file(GLOB SRCS "*.cpp")
@@ -17,6 +17,7 @@ file(GLOB HDRS "*.h")
 # Targets
 add_library(rcore
     Interpolator.cpp
+    rxInterpolator.cpp
 #    ${SRCS}
 #    ${HDRS}
 )
@@ -25,7 +26,8 @@ add_library(rcore
 # )
 target_include_directories(
     rcore
-    PRIVATE
-    "/usr/include/eigen3"
+    PUBLIC
+#    "/usr/include/eigen3"
+    "${EIGEN3_INCLUDE_DIR}"
     "${CMAKE_SOURCE_DIR}/include"
 )
